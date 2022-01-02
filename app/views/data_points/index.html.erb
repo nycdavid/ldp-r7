@@ -1,1 +1,32 @@
-<%= @data_points %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>LDP</title>
+  </head>
+  <body>
+    <div class="container">
+      <% @tables.each do |table| %>
+        <h1><%= table.section_header %></h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <% table.class::TABLE_HEADERS.each do |header| %>
+                <th><%= header %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% table.rows.each do |row| %>
+              <tr>
+                <td><%= row.datetime %></td>
+                <td><%= row.value.html_safe %></td>
+                <td><%= row.notes %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </body>
+</html>
