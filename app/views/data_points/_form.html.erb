@@ -1,0 +1,33 @@
+<%= form_with(model: data_point) do |form| %>
+  <% if data_point.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(data_point.errors.count, "error") %> prohibited this data_point from being saved:</h2>
+
+      <ul>
+        <% data_point.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label(:event_type, "Event type") %>
+    <%= form.select(
+      :event_type,
+      DataPoint::EVENT_TYPES.map(&:capitalize),
+      class: "form-control custom-select"
+    ) %>
+  </div>
+  <div class="form-group">
+    <%= form.label(:unit_value, "Units") %>
+    <%= form.number_field(:unit_value, step: :any, class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= form.label(:notes, "Notes") %>
+    <%= form.text_area(:notes, size: "70x5", class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= form.submit(:Submit, class: "btn btn-success") %>
+  </div>
+<% end %>

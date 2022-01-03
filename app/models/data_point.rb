@@ -6,7 +6,9 @@ class DataPoint < ApplicationRecord
     leetcode: "leetcode_id",
   }.with_indifferent_access
 
-  def self.generate(event_type, value, notes)
+  EVENT_TYPES = %w[weight jumprope music leetcode]
+
+  def self.generate(event_type, unit_value, notes)
     timestamp = Time.now.to_i
 
     {
@@ -14,7 +16,7 @@ class DataPoint < ApplicationRecord
       data: {
         timestamp: timestamp,
         timestamp_unit: "seconds",
-        value: value,
+        value: unit_value,
         value_unit: UNIT_MAPPING[event_type],
       },
       created_at: Time.at(timestamp),
