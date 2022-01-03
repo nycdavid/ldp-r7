@@ -31,9 +31,10 @@ RSpec.describe DataPoint do
     end
 
     it "downcases event type" do
-      data = described_class.generate("Weight", 175, "Cheat meal + 1")
+      data_hash = described_class.generate("Weight", 175, "Cheat meal + 1")
 
-      expect(data).to include(event_type: "weight")
+      expect(data_hash).to include(event_type: "weight")
+      expect(data_hash[:data][:value_unit]).to eq("lbs")
     end
   end
 end
