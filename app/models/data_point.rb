@@ -14,6 +14,7 @@ class DataPoint < ApplicationRecord
     {
       event_type: event_type,
       data: {
+        notes: notes,
         timestamp: timestamp,
         timestamp_unit: "seconds",
         value: unit_value,
