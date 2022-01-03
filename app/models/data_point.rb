@@ -6,13 +6,13 @@ class DataPoint < ApplicationRecord
     leetcode: "leetcode_id",
   }.with_indifferent_access
 
-  EVENT_TYPES = %w[weight jumprope music leetcode]
+  EVENT_TYPES = UNIT_MAPPING.keys
 
   def self.generate(event_type, unit_value, notes)
     timestamp = Time.now.to_i
 
     {
-      event_type: event_type,
+      event_type: event_type.downcase,
       data: {
         notes: notes,
         timestamp: timestamp,
