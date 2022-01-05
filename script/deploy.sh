@@ -6,6 +6,7 @@ export RAILS_SERVE_STATIC_FILES=true
 
 git pull origin main
 
+bundle install
 bundle exec rake assets:precompile
 bundle exec rake db:migrate
 
