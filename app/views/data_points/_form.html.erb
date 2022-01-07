@@ -19,15 +19,15 @@
       class: "form-control custom-select"
     ) %>
   </div>
-  <div class="form-group">
+  <div class="form-group input">
     <%= form.label(:unit_value, "Units") %>
     <%= form.number_field(:unit_value, step: :any, class: "form-control") %>
   </div>
-  <div class="form-group">
+  <div class="form-group input">
     <%= form.label(:notes, "Notes") %>
-    <%= form.text_area(:notes, size: "70x5", class: "form-control") %>
+    <%= form.text_area(:notes, size: "70x5", class: "form-control note") %>
   </div>
-  <div class="form-group">
+  <div class="form-group submit">
     <%= form.submit(:Submit, class: "btn btn-success") %>
   </div>
 <% end %>
