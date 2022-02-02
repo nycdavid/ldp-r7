@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   root "data_points#index"
 
   resources :data_points
