@@ -1,21 +1,19 @@
-<% @tables.each do |table| %>
-  <h1><%= table.section_header %></h1>
-  <table class="table table-striped">
-    <thead>
+<table class="table">
+<thead>
+  <tr>
+    <th>Date</th>
+    <th>Weight</th>
+    <th>Person</th>
+  </tr>
+</thead>
+  <tbody>
+    <% @rows.each do |row| %>
       <tr>
-        <% table.class::TABLE_HEADERS.each do |header| %>
-          <th><%= header %></th>
-        <% end %>
+        <td><%= row.created_at.strftime("%m/%d/%Y") %></td>
+        <td><%= row.measurement %></td>
+        <td><%= row.user.name%></td>
       </tr>
-    </thead>
-    <tbody>
-      <% table.rows.each do |row| %>
-        <tr>
-          <td><%= row.datetime %></td>
-          <td><%= row.value.html_safe %></td>
-          <td><%= row.notes %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
+    <% end %>
+  </tbody>
+  
+</table>

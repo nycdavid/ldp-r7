@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :weights
   resources :users
   root "data_points#index"
 
@@ -6,4 +7,6 @@ Rails.application.routes.draw do
 
   get :about_us, to: "pages#about_us"
   get :retirement_calculator, to: "pages#retirement_calculator"
+
+  get "/sample", to: "pages#sample"
 end
