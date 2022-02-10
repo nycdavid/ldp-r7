@@ -1,14 +1,27 @@
 <p style="color: green"><%= notice %></p>
-
 <h1>Weights</h1>
-
 <div id="weights">
-  <% @weights.each do |weight| %>
-    <%= render weight %>
-    <p>
-      <%= link_to "Show this weight", weight %>
-    </p>
-  <% end %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Weight</th>
+        <th>Person</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @weights.each do |weight| %>
+        <tr>
+          <td><%= weight.created_at.strftime("%m/%d/%Y") %></td>
+          <td>
+            <%= weight.measurement %>
+            <%= @weights[0].measurement - weight.measurement %>
+          
+          </td>
+          <td><%= weight.user.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-
 <%= link_to "New weight", new_weight_path %>

@@ -1,7 +1,19 @@
-<div id="<%= dom_id weight %>">
-  <p>
-    <strong>Measurement:</strong>
-    <%= weight.measurement %>
-  </p>
-
-</div>
+<table class="table">
+<thead>
+  <tr>
+    <th>Date</th>
+    <th>Weight</th>
+    <th>Person</th>
+  </tr>
+</thead>
+  <tbody>
+    <% @weights.each do |weight| %>
+      <tr>
+        <td><%= weight.created_at.strftime("%m/%d/%Y") %></td>
+        <td><%= weight.measurement %></td>
+        <td><%= weight.user.name%></td>
+      </tr>
+    <% end %>
+  </tbody>
+  
+</table>
