@@ -11,5 +11,7 @@ RSpec.describe "Weights CRUD", type: :system do
     fill_in "Measurement", with: 200
     select user.name, from: "weight[user_id]"
     click_button "Create Weight"
+
+    expect(user.reload.weights.count).to eq(1)
   end
 end

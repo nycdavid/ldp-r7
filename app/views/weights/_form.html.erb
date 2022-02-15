@@ -15,6 +15,10 @@
     <%= form.label :measurement, style: "display: block" %>
     <%= form.text_field :measurement %>
   </div>
+  <div>
+    <%= form.label(:user) %>
+    <%= form.select(:user_id, User.all.map { |u| [u.name, u.id] }) %>
+  </div>
 
   <div>
     <%= form.submit %>
