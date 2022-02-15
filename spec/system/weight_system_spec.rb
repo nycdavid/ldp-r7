@@ -12,6 +12,7 @@ RSpec.describe "Weights CRUD", type: :system do
     select user.name, from: "weight[user_id]"
     click_button "Create Weight"
 
+    expect(page).to have_text("Weight was successfully created")
     expect(user.reload.weights.count).to eq(1)
   end
 end
