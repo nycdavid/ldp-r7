@@ -73,4 +73,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "test-prof", "~> 1.0"
 end
