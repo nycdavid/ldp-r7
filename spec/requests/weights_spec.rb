@@ -13,116 +13,32 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/weights", type: :request do
+  let_it_be(:david) { FactoryBot.create(:user, name: "David") }
+  let_it_be(:jane) { FactoryBot.create(:user, name: "Jane") }
 
-  # Weight. As you add validations to Weight, be sure to
-  # adjust the attributes here as well.
-  # let(:valid_attributes) {
-  #   skip("Add a hash of attributes valid for your model")
-  # }
-
-  # let(:invalid_attributes) {
-  #   skip("Add a hash of attributes invalid for your model")
-  # }
-
-  # describe "GET /index" do
-  #   it "renders a successful response" do
-  #     Weight.create! valid_attributes
-  #     get weights_url
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  # describe "GET /show" do
-  #   it "renders a successful response" do
-  #     weight = Weight.create! valid_attributes
-  #     get weight_url(weight)
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  # describe "GET /new" do
-  #   it "renders a successful response" do
-  #     get new_weight_url
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  # describe "GET /edit" do
-  #   it "render a successful response" do
-  #     weight = Weight.create! valid_attributes
-  #     get edit_weight_url(weight)
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  describe "POST /create" do
-    let(:user) { FactoryBot.create(:user) }
-
-    context "with valid parameters" do
-      it "creates a new Weight" do
-        post(weights_url, params: { weight: { measurement: 200, user_id: user.id } })
-
-        expect(user.weights.count).to eq(1)
-        expect(user.weights.first.measurement).to eq(200)
-      end
-    end
-
-    # context "with invalid parameters" do
-    #   it "does not create a new Weight" do
-    #     expect {
-    #       post weights_url, params: { weight: invalid_attributes }
-    #     }.to change(Weight, :count).by(0)
-    #   end
-
-    #   it "renders a successful response (i.e. to display the 'new' template)" do
-    #     post weights_url, params: { weight: invalid_attributes }
-    #     expect(response).to be_successful
-    #   end
-    # end
+  before do
+    FactoryBot.create_list(:weight, 3, user: david)
+    FactoryBot.create_list(:weight, 3, user: jane)
   end
 
-  # describe "PATCH /update" do
-  #   context "with valid parameters" do
-  #     let(:new_attributes) {
-  #       skip("Add a hash of attributes valid for your model")
-  #     }
+  describe "GET /index" do
+    it "returns a users weights" do
+      get(weights_path, params: { user_name: "David" })
 
-  #     it "updates the requested weight" do
-  #       weight = Weight.create! valid_attributes
-  #       patch weight_url(weight), params: { weight: new_attributes }
-  #       weight.reload
-  #       skip("Add assertions for updated state")
-  #     end
+      unique_user_ids = controller.instance_variable_get(:@weights).
+        map { |weight| weight.user_id }.uniq
 
-  #     it "redirects to the weight" do
-  #       weight = Weight.create! valid_attributes
-  #       patch weight_url(weight), params: { weight: new_attributes }
-  #       weight.reload
-  #       expect(response).to redirect_to(weight_url(weight))
-  #     end
-  #   end
+      expect(unique_user_ids).to eq([david.id])
+    end
+  end
 
-  #   context "with invalid parameters" do
-  #     it "renders a successful response (i.e. to display the 'edit' template)" do
-  #       weight = Weight.create! valid_attributes
-  #       patch weight_url(weight), params: { weight: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
-  # end
+  describe "POST /create" do
+    context "with valid parameters" do
+      it "creates a new Weight" do
+        post(weights_path, params: { weight: { measurement: 200, user_id: david.id } })
 
-  # describe "DELETE /destroy" do
-  #   it "destroys the requested weight" do
-  #     weight = Weight.create! valid_attributes
-  #     expect {
-  #       delete weight_url(weight)
-  #     }.to change(Weight, :count).by(-1)
-  #   end
-
-  #   it "redirects to the weights list" do
-  #     weight = Weight.create! valid_attributes
-  #     delete weight_url(weight)
-  #     expect(response).to redirect_to(weights_url)
-  #   end
-  # end
+        expect(david.weights.last.measurement).to eq(200)
+      end
+    end
+  end
 end
