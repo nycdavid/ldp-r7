@@ -15,13 +15,13 @@ RSpec.describe "weights/index", type: :view do
   it "renders a list of weights" do
     render
 
-    expect(rendered).to have_selector("table.table")
+    expect(rendered).to have_selector("table.table", count: 1)
 
     # Table header
-    expect(rendered).to have_selector("table.table thead > th", count: 3)
-    expect(rendered).to have_selector("table.table thead > th:nth-child(1)", text: "Date")
-    expect(rendered).to have_selector("table.table thead > th:nth-child(2)", text: "Measurement")
-    expect(rendered).to have_selector("table.table thead > th:nth-child(3)", text: "Person")
+    expect(rendered).to have_selector("table.table thead tr > th", count: 3)
+    expect(rendered).to have_selector("table.table thead tr > th:nth-child(1)", text: "Date")
+    expect(rendered).to have_selector("table.table thead tr > th:nth-child(2)", text: "Measurement")
+    expect(rendered).to have_selector("table.table thead tr > th:nth-child(3)", text: "Person")
 
     # Table body
     expect(rendered).to have_selector("table.table tbody > tr", count: 2)
@@ -30,11 +30,11 @@ RSpec.describe "weights/index", type: :view do
       text: weight1.created_at.strftime("%m/%d/%Y"),
     )
     expect(rendered).to have_selector(
-      "table.table thead > tr:nth-child(1) > td:nth-child(2)",
+      "table.table tbody > tr:nth-child(1) > td:nth-child(2)",
       text: weight1.measurement.truncate(2),
     )
     expect(rendered).to have_selector(
-      "table.table thead > tr:nth-child(1) > td:nth-child(3)",
+      "table.table tbody > tr:nth-child(1) > td:nth-child(3)",
       text: weight1.user.name,
     )
   end
