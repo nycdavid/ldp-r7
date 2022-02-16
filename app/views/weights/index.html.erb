@@ -2,13 +2,21 @@
 
 <h1>Weights</h1>
 
-<div id="weights">
-  <% @weights.each do |weight| %>
-    <%= render weight %>
-    <p>
-      <%= link_to "Show this weight", weight %>
-    </p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Measurement</th>
+      <th>Person</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @weights.each do |weight| %>
+    <tr>
+      <td><%= weight.created_at.strftime("%m/%d/%Y")%></td>
+      <td><%= weight.measurement.truncate(2)%></td>
+      <td><%= weight.user.name%></td>
+    </tr>
   <% end %>
-</div>
-
-<%= link_to "New weight", new_weight_path %>
+  </tbody>
+</table>
