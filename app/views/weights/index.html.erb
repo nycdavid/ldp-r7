@@ -15,9 +15,9 @@
   <tbody>
     <% @weights.each do |weight| %>
     <tr>
-      <td><%= weight.created_at.strftime("%m/%d/%Y")%></td>
-      <td><%= weight.measurement.truncate(2)%></td>
-      <td><%= weight.user.name%></td>
+      <td><%= weight.created_at.strftime("%m/%d/%Y") %></td>
+      <td><%= weight.measurement.truncate(1) %></td>
+      <td><%= weight.user.name %></td>
     </tr>
   <% end %>
   </tbody>
