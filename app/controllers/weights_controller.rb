@@ -3,7 +3,8 @@ class WeightsController < ApplicationController
 
   # GET /weights or /weights.json
   def index
-    @weights = Weight.all
+    user_id = User.find_by(name: params[:user_name].capitalize).id
+    @weights = Weight.where(user_id: user_id)
   end
 
   # GET /weights/1 or /weights/1.json
