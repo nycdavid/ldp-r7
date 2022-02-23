@@ -19,6 +19,10 @@
     <%= form.label(:user) %>
     <%= form.select(:user_id, User.all.map { |u| [u.name, u.id] }) %>
   </div>
+  <div>
+    <%= form.label(:notes) %>
+    <%= form.text_area(:notes) %>
+  </div>
 
   <div>
     <%= form.submit %>

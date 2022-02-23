@@ -10,9 +10,14 @@ RSpec.describe "Weights CRUD", type: :system do
 
     fill_in "Measurement", with: 200
     select user.name, from: "weight[user_id]"
+    fill_in "Notes", with: "I feel this way"
     click_button "Create Weight"
 
+    user.reload
+
     expect(page).to have_text("Weight was successfully created")
-    expect(user.reload.weights.count).to eq(1)
+    expect(user.weights.count).to eq(1)
+    created_weight = user.weights.last
+    expect(created_weight.notes).to eq("I feel this way")
   end
 end

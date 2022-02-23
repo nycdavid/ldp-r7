@@ -15,10 +15,11 @@ RSpec.describe "weights/index", type: :view do
     expect(rendered).to have_selector("table.table", count: 1)
 
     # Table header
-    expect(rendered).to have_selector("table.table thead tr > th", count: 3)
+    expect(rendered).to have_selector("table.table thead tr > th", count: 4)
     expect(rendered).to have_selector("table.table thead tr > th:nth-child(1)", text: "Date")
     expect(rendered).to have_selector("table.table thead tr > th:nth-child(2)", text: "Measurement")
     expect(rendered).to have_selector("table.table thead tr > th:nth-child(3)", text: "Person")
+    expect(rendered).to have_selector("table.table thead tr > th:nth-child(4)", text: "Notes")
 
     # Table body
     expect(rendered).to have_selector("table.table tbody > tr", count: 2)
@@ -33,6 +34,10 @@ RSpec.describe "weights/index", type: :view do
     expect(rendered).to have_selector(
       "table.table tbody > tr:nth-child(1) > td:nth-child(3)",
       text: weight1.user.name,
+    )
+    expect(rendered).to have_selector(
+      "table.table tbody > tr:nth-child(1) > td:nth-child(4)",
+      text: "Feelings go here",
     )
   end
 
