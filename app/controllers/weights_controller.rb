@@ -3,8 +3,8 @@ class WeightsController < ApplicationController
 
   # GET /weights or /weights.json
   def index
-    user = User.find_by(name: params[:user_name].capitalize)
-    @weights = user.weights_in_order
+    @user = User.find_by(name: params[:user_name].capitalize)
+    @weights = @user.weights_in_order
   end
 
   # GET /weights/1 or /weights/1.json

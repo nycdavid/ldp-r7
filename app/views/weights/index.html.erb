@@ -1,25 +1,24 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Weights</h1>
+<header class="weights-header">
+  <h1><%= @user.name %>'s Weights</h1>
+  <%= link_to("Weigh In", "/weights/new", { class: "btn btn-primary weigh-in" }) %>
+</header>
 
-<%= link_to("Weigh In", "/weights/new", { class: "btn btn-primary" }) %>
-
-<table class="table">
+<table class="table container">
   <thead>
-    <tr>
-      <th>Date</th>
-      <th>Measurement</th>
-      <th>Person</th>
-      <th>Notes</th>
+    <tr class="row">
+      <th class="col">Date</th>
+      <th class="col">Measurement</th>
+      <th class="col-8">Notes</th>
     </tr>
   </thead>
   <tbody>
     <% @weights.each do |weight| %>
-    <tr>
-      <td><%= weight.created_at.strftime("%m/%d/%Y") %></td>
-      <td><%= weight.measurement.truncate(1) %></td>
-      <td><%= weight.user.name %></td>
-      <td><%= weight.notes %></td>
+    <tr class="row">
+      <td class="col"><%= weight.created_at.strftime("%m/%d/%Y") %></td>
+      <td class="col"><%= weight.measurement.truncate(1) %></td>
+      <td class="col-8"><%= weight.notes %></td>
     </tr>
   <% end %>
   </tbody>
