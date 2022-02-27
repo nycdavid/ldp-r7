@@ -8,7 +8,6 @@ class WeightsController < ApplicationController
     @weight_chart_data = {
       dates: @user.weights.map { |w| w.created_at.strftime("%m/%d/%Y") },
       data: @user.weights.map { |w| w.measurement.truncate(2) },
-      decreasing: @user.weights.first.measurement > @user.weights.last.measurement,
     }.to_json
   end
 

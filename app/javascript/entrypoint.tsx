@@ -2,6 +2,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+import styled from "styled-components";
+
 // Chart.js
 import {
   Chart as ChartJS,
@@ -35,26 +37,37 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 interface WeightChartProps {
-  dates: Array<String>,
-  data: Array<Number>,
-  decreasing: Boolean,
+  dates: Array<string>,
+  data: Array<number>,
+  decreasing: boolean,
+}
+
+const colors = {
+  goodGreen: [24, 128, 56],
+  badRed: [217, 48, 37],
 }
 
 const WeightChart = ({ dates, data, decreasing }: WeightChartProps) => {
   let rgbValues = [];
 
   if (decreasing) {
-    rgbValues = [24, 128, 56];
+    rgbValues = colors.goodGreen;
   } else {
-    rgbValues = [217, 48, 37];
+    rgbValues = colors.badRed;
   }
+
+  const pctChange = (((data[data.length - 1] - data[0]) / data[data.length - 1]) * 100).toFixed(2)
 
   return (
     <React.Fragment>
+      <h1>{data[data.length - 1]} lbs</h1>
+      <NetChange decreasing={decreasing}>
+        {decreasing ? "-" : "+"}{data[data.length - 1] - data[0]} lbs ({pctChange}%)
+      </NetChange>
       <Line
         data={{
           labels: dates,
-          datasets:[
+          datasets: [
             {
               label: "David's weight",
               data: data,
@@ -67,3 +80,8 @@ const WeightChart = ({ dates, data, decreasing }: WeightChartProps) => {
     </React.Fragment>
   )
 }
+
+const NetChange = styled.p`
+  color: ${props => props.decreasing ? "rgb(24, 128, 56)" : "rgb(217, 48, 37)"};
+  font-size: 18px;
+`;

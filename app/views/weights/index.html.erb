@@ -1,11 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
 <header class="weights-header">
-  <h1><%= @user.name %>'s Weights</h1>
+  <h1><%= @user.name %></h1>
   <%= link_to("Weigh In", "/weights/new", { class: "btn btn-primary weigh-in" }) %>
 </header>
 
-<section id="app"></section>
+<section id="app">
+  <% # React component: <WeightChart /> mount point %>
+</section>
 
 <table class="table container">
   <thead>
