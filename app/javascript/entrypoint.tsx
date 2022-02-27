@@ -20,7 +20,6 @@ ChartJS.register(
   PointElement,
 );
 
-// @ts-ignore
 import { Line } from "react-chartjs-2";
 
 document.addEventListener("DOMContentLoaded", () => {
