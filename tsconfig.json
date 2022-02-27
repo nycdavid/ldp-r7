@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "lib": ["ES6", "DOM"],
+    "lib": ["ES6", "DOM"]
   },
   "include": [
     "app/javascript/**/*.tsx",
+    "app/javascript/**/*.ts",
   ],
   "exclude": [
     "node_modules"
