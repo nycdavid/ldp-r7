@@ -3,7 +3,8 @@
   "private": "true",
   "dependencies": {
     "@hotwired/turbo-rails": "^7.1.1",
-    "esbuild": "^0.14.23"
+    "esbuild": "^0.14.23",
+    "react": "^17.0.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds"
