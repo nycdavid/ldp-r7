@@ -5,6 +5,11 @@ class WeightsController < ApplicationController
   def index
     @user = User.find_by(name: params[:user_name].capitalize)
     @weights = @user.weights_in_order
+    @weight_chart_data = {
+      dates: @user.weights.map { |w| w.created_at.strftime("%m/%d/%Y") },
+      data: @user.weights.map { |w| w.measurement.truncate(2) },
+      decreasing: @user.weights.first.measurement > @user.weights.last.measurement,
+    }.to_json
   end
 
   # GET /weights/1 or /weights/1.json
