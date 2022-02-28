@@ -42,3 +42,4 @@
 
 /node_modules
 app/javascript/*.js
+.envrc
