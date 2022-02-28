@@ -53,7 +53,7 @@ const WeightChart = ({ weights }: WeightChartProps) => {
     <React.Fragment>
       <h1>{weights.currentValue()} lbs</h1>
       <NetChange decreasing={weights.decreasing()}>
-        {weights.decreasing() ? "-" : "+"}
+        {weights.decreasing() ? "" : "+"}
         {weights.netChange()} lbs
         ({weights.pctChange()})
       </NetChange>
