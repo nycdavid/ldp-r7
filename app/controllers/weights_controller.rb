@@ -4,7 +4,7 @@ class WeightsController < ApplicationController
   # GET /weights or /weights.json
   def index
     @user = User.find_by(name: params[:user_name].capitalize)
-    @weights = @user.weights_in_order
+    @weights = @user.last_n_weights(7).reverse
     @weight_chart_data = @weights.map do |weight|
       {
         date: weight.created_at.strftime("%m/%d/%Y"),
