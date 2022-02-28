@@ -24,22 +24,21 @@ ChartJS.register(
 
 import { Line } from "react-chartjs-2";
 
+import Weights from "./weights";
+
 document.addEventListener("DOMContentLoaded", () => {
   const rootEl = document.getElementById("app");
-  const weightData = JSON.parse(document.getElementById("weight-data").textContent)
+  const measurements = JSON.parse(document.getElementById("weight-data").textContent)
+  const weights: Weights = new Weights(measurements);
   ReactDOM.render(
     <WeightChart
-      dates={weightData.dates}
-      data={weightData.data}
-      decreasing={weightData.decreasing}
+      weights={weights}
     />, rootEl
   );
 });
 
 interface WeightChartProps {
-  dates: Array<string>,
-  data: Array<number>,
-  decreasing: boolean,
+  weights: Weights
 }
 
 const colors = {
@@ -47,30 +46,24 @@ const colors = {
   badRed: [217, 48, 37],
 }
 
-const WeightChart = ({ dates, data, decreasing }: WeightChartProps) => {
-  let rgbValues = [];
-
-  if (decreasing) {
-    rgbValues = colors.goodGreen;
-  } else {
-    rgbValues = colors.badRed;
-  }
-
-  const pctChange = (((data[data.length - 1] - data[0]) / data[data.length - 1]) * 100).toFixed(2)
+const WeightChart = ({ weights }: WeightChartProps) => {
+  let rgbValues = weights.decreasing() ? colors.goodGreen : colors.badRed;
 
   return (
     <React.Fragment>
-      <h1>{data[data.length - 1]} lbs</h1>
-      <NetChange decreasing={decreasing}>
-        {decreasing ? "-" : "+"}{data[data.length - 1] - data[0]} lbs ({pctChange}%)
+      <h1>{weights.currentValue()} lbs</h1>
+      <NetChange decreasing={weights.decreasing()}>
+        {weights.decreasing() ? "-" : "+"}
+        {weights.netChange()} lbs
+        ({weights.pctChange()})
       </NetChange>
       <Line
         data={{
-          labels: dates,
+          labels: weights.dates(),
           datasets: [
             {
               label: "David's weight",
-              data: data,
+              data: weights.weights(),
               borderColor: `rgb(${rgbValues.join(", ")})`,
               backgroundColor: `rgb(${rgbValues.join(", ")}, 0.5)`,
             },
