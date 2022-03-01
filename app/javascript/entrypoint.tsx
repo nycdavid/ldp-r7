@@ -58,6 +58,31 @@ const WeightChart = ({ weights }: WeightChartProps) => {
           {weights.netChange()} lbs
           ({weights.pctChange()})
         </NetChange>
+        <DateRangePicker>
+          <ul className="nav nav-pills">
+            <li className="nav-item">
+              <button className="nav-link active">7D</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link">2W</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link">3W</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link">1M</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link">6M</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link">1Y</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link">All</button>
+            </li>
+          </ul>
+        </DateRangePicker>
       </ProgressInfo>
 
       <Line
@@ -92,5 +117,16 @@ const ProgressInfo = styled.div`
   p {
     display: inline;
     margin-left: 10px;
+  }
+`;
+
+const DateRangePicker = styled.section`
+  li {
+    margin-right: 7px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 2px 8px;
   }
 `;
