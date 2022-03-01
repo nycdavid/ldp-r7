@@ -51,12 +51,15 @@ const WeightChart = ({ weights }: WeightChartProps) => {
 
   return (
     <React.Fragment>
-      <h1>{weights.currentValue()} lbs</h1>
-      <NetChange decreasing={weights.decreasing()}>
-        {weights.decreasing() ? "" : "+"}
-        {weights.netChange()} lbs
-        ({weights.pctChange()})
-      </NetChange>
+      <ProgressInfo>
+        <h1>{weights.currentValue()} lbs</h1>
+        <NetChange decreasing={weights.decreasing()}>
+          {weights.decreasing() ? "" : "+"}
+          {weights.netChange()} lbs
+          ({weights.pctChange()})
+        </NetChange>
+      </ProgressInfo>
+
       <Line
         data={{
           labels: weights.dates(),
@@ -77,4 +80,17 @@ const WeightChart = ({ weights }: WeightChartProps) => {
 const NetChange = styled.p`
   color: ${props => props.decreasing ? "rgb(24, 128, 56)" : "rgb(217, 48, 37)"};
   font-size: 18px;
+`;
+
+const ProgressInfo = styled.div`
+  margin-bottom: 20px;
+
+  h1 {
+    display: inline;
+  }
+
+  p {
+    display: inline;
+    margin-left: 10px;
+  }
 `;
