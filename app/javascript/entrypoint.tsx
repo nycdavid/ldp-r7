@@ -58,7 +58,7 @@ const WeightChart = ({ weights }: WeightChartProps) => {
           {weights.netChange()} lbs
           ({weights.pctChange()})
         </NetChange>
-        <DateRangePicker onClick={(data) => { console.log(data) }} />
+        <DateRangePicker onClick={(data) => { }} />
       </ProgressInfo>
 
       <Line
