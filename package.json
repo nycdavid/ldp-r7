@@ -19,6 +19,8 @@
     "dev": "tsc-watch --noEmit --noClear --project tsconfig.json --onSuccess \"yarn build\""
   },
   "devDependencies": {
+    "@pollyjs/adapter-node-http": "^6.0.4",
+    "@pollyjs/core": "^6.0.4",
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.3",
