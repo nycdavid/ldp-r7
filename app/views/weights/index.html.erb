@@ -31,3 +31,6 @@
 <script id="weight-data" type="application/json">
   <%= @weight_chart_data.html_safe %>
 </script>
+<script id="routes" type="application/json">
+  <%= { index: weights_url }.to_json.html_safe %>
+</script>
