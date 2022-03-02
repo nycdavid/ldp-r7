@@ -4,13 +4,24 @@ class WeightsController < ApplicationController
   # GET /weights or /weights.json
   def index
     @user = User.find_by(name: params[:user_name].capitalize)
-    @weights = @user.last_n_weights(params.fetch(:last_n, 7)).reverse
-    @weight_chart_data = @weights.map do |weight|
+    @weights = @user.weights.where("created_at >= ?", range_param.days.ago).
+      order(created_at: :asc)
+    formatted_weights = @weights.map do |weight|
       {
         date: weight.created_at.strftime("%m/%d/%Y"),
         measurement: weight.measurement.truncate(2),
       }
     end.to_json
+
+    respond_to do |format|
+      format.html do
+        @weight_chart_data = formatted_weights
+      end
+
+      format.json do
+        render(json: formatted_weights)
+      end
+    end
   end
 
   # GET /weights/1 or /weights/1.json
@@ -65,13 +76,17 @@ class WeightsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_weight
-      @weight = Weight.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_weight
+    @weight = Weight.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def weight_params
-      params.require(:weight).permit(:measurement, :user_id, :notes)
-    end
+  # Only allow a list of trusted parameters through.
+  def weight_params
+    params.require(:weight).permit(:measurement, :user_id, :notes)
+  end
+
+  def range_param
+    params.permit(:range).with_defaults(range: 7).require(:range).to_i
+  end
 end

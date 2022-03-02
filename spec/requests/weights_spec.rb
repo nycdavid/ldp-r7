@@ -18,7 +18,20 @@ RSpec.describe "/weights", type: :request do
 
   before do
     FactoryBot.create_list(:weight, 3, user: david)
+    FactoryBot.create(
+      :weight,
+      user: david,
+      created_at: 10.days.ago,
+      updated_at: 10.days.ago,
+    )
+
     FactoryBot.create_list(:weight, 3, user: jane)
+    FactoryBot.create(
+      :weight,
+      user: jane,
+      created_at: 10.days.ago,
+      updated_at: 10.days.ago,
+    )
   end
 
   describe "GET /index" do
@@ -29,6 +42,47 @@ RSpec.describe "/weights", type: :request do
         map { |weight| weight.user_id }.uniq
 
       expect(unique_user_ids).to eq([david.id])
+    end
+  end
+
+  describe "GET /index.json" do
+    let(:headers) do
+      { ACCEPT: "application/json", "Content-Type": "application/json" }
+    end
+
+    it "returns a users weights" do
+      get(weights_path, params: { user_name: "David" }, headers: headers)
+
+      resp = JSON.parse(response.body)
+      weights_within_range = david.weights.where("created_at >= ?", 7.days.ago)
+
+      expect(response).to have_http_status(:ok)
+      expect(resp.count).to eq(weights_within_range.count)
+      expect(resp[0].keys).to match_array(%w[date measurement])
+    end
+
+    it "supports a range parameter" do
+      get(weights_path, params: { user_name: "David", range: 14 }, headers: headers)
+
+      resp = JSON.parse(response.body)
+      weights_within_range = david.weights.where("created_at >= ?", 14.days.ago)
+
+      expect(resp.count).to eq(weights_within_range.count)
+    end
+
+    it "returns the weights in order" do
+      get(weights_path, params: { user_name: "David", range: 14 }, headers: headers)
+
+      resp = JSON.parse(response.body)
+      weights_within_range = david.weights.where("created_at >= ?", 14.days.ago)
+
+      returned_dates = resp.map do |weight|
+        Date.strptime(weight["date"], "%m/%d/%Y")
+      end
+
+      1.upto(returned_dates.length - 1) do |n|
+        expect(returned_dates[n]).to be >= returned_dates[n - 1]
+      end
     end
   end
 
