@@ -3,4 +3,6 @@
 - Prepare the development and test databases
   - `rails db:migrate`
   - `rails db:test:prepare`
-- Start Rails server: `bundle exec rails s`
+- Install any missing yarn packages: `yarn`
+- Install any missing Ruby gems: `bundle`
+- Start application processes: `./bin/dev`
