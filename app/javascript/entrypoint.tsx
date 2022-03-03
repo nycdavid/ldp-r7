@@ -24,8 +24,10 @@ ChartJS.register(
 
 import { Line } from "react-chartjs-2";
 
+// Project files
 import Weights from "./weights";
 import WeightsRequest from "./weights_request";
+import DateRangePicker from "./date_range_picker";
 
 document.addEventListener("DOMContentLoaded", () => {
   const rootEl = document.getElementById("app");
@@ -34,14 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const weights: Weights = new Weights(measurements);
   ReactDOM.render(
     <WeightChart
-      weights={weights}
+      initialWeights={weights}
       weightsRequest={new WeightsRequest(routes)}
     />, rootEl
   );
 });
 
 interface WeightChartProps {
-  weights: Weights,
+  initialWeights: Weights,
   weightsRequest: WeightsRequest,
 }
 
@@ -50,34 +52,35 @@ const colors = {
   badRed: [217, 48, 37],
 }
 
-const WeightChart = ({ weights, weightsRequest }: WeightChartProps) => {
-  let rgbValues = weights.decreasing() ? colors.goodGreen : colors.badRed;
-  const [weightsState, setWeights] = useState(weights);
+const WeightChart = ({ initialWeights, weightsRequest }: WeightChartProps) => {
+  let rgbValues = initialWeights.decreasing() ? colors.goodGreen : colors.badRed;
+  const [weights, setWeights] = useState(initialWeights);
 
   return (
     <React.Fragment>
       <ProgressInfo>
-        <h1>{weightsState.currentValue()} lbs</h1>
-        <NetChange decreasing={weightsState.decreasing()}>
-          {weightsState.decreasing() ? "" : "+"}
-          {weightsState.netChange()} lbs
-          ({weightsState.pctChange()})
+        <h1>{weights.currentValue()} lbs</h1>
+        <NetChange decreasing={weights.decreasing()}>
+          {weights.decreasing() ? "" : "+"}
+          {weights.netChange()} lbs
+          ({weights.pctChange()})
         </NetChange>
         <DateRangePicker
-          onClick={async (data) => {
+          onClick={async (data, afterClick) => {
             const w = await weightsRequest.index("david", data)
             setWeights(w);
+            afterClick();
           }}
         />
       </ProgressInfo>
 
       <Line
         data={{
-          labels: weightsState.dates(),
+          labels: weights.dates(),
           datasets: [
             {
               label: "David's weight",
-              data: weightsState.weights(),
+              data: weights.weights(),
               borderColor: `rgb(${rgbValues.join(", ")})`,
               backgroundColor: `rgb(${rgbValues.join(", ")}, 0.5)`,
             },
@@ -88,7 +91,7 @@ const WeightChart = ({ weights, weightsRequest }: WeightChartProps) => {
   )
 }
 
-const NetChange = styled.p`
+const NetChange = styled.p<{ decreasing: boolean }>`
   color: ${props => props.decreasing ? "rgb(24, 128, 56)" : "rgb(217, 48, 37)"};
   font-size: 18px;
 `;
@@ -105,48 +108,3 @@ const ProgressInfo = styled.div`
     margin-left: 10px;
   }
 `;
-
-const DateRangePicker = ({ onClick }: { onClick: (data: number) => void }) => {
-  const ranges = {
-    "7D": 7,
-    "2W": 7 * 2,
-    "3W": 7 * 3,
-    "1M": 7 * 4,
-    "6M": 7 * 4 * 6,
-    "1Y": 365,
-  }
-
-  const DateButtons = styled.section`
-    li {
-      margin-right: 7px;
-    }
-
-    button {
-      font-size: 12px;
-      padding: 2px 8px;
-    }
-  `;
-
-  return (
-    <DateButtons>
-      <ul className="nav nav-pills">
-        {
-          Object.keys(ranges).map((rangeDisplayVal, idx) => {
-            const dayValue = ranges[rangeDisplayVal];
-
-            return (
-              <li className="nav-item" key={idx}>
-                <button
-                  className="nav-link"
-                  onClick={() => { onClick(dayValue) }}
-                >
-                  {rangeDisplayVal}
-                </button>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </DateButtons>
-  )
-}
