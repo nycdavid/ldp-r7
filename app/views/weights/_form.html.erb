@@ -12,16 +12,16 @@
   <% end %>
 
   <div>
-    <%= form.label :measurement, style: "display: block" %>
-    <%= form.text_field :measurement %>
+    <%= form.label(:measurement, class: "form-label") %>
+    <%= form.text_field(:measurement, class: "form-control") %>
   </div>
   <div>
-    <%= form.label(:user) %>
-    <%= form.select(:user_id, User.all.map { |u| [u.name, u.id] }) %>
+    <%= form.label(:user, class: "form-label") %>
+    <%= form.select(:user_id, User.all.map { |u| [u.name, u.id] }, class: "form-control") %>
   </div>
   <div>
-    <%= form.label(:notes) %>
-    <%= form.text_area(:notes) %>
+    <%= form.label(:notes, class: "form-label") %>
+    <%= form.text_area(:notes, class: "form-control") %>
   </div>
 
   <div>

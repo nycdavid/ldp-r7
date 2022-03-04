@@ -25,12 +25,17 @@ ChartJS.register(
 import { Line } from "react-chartjs-2";
 
 // Project files
+// Components
 import Weights from "./weights";
+import WeightsNew from "./weights/new";
+
 import WeightsRequest from "./weights_request";
 import DateRangePicker from "./date_range_picker";
 
 document.addEventListener("DOMContentLoaded", () => {
   const rootEl = document.getElementById("app");
+  const modelAction: string = rootEl.dataset.modelAction;
+
   const measurements = JSON.parse(document.getElementById("weight-data").textContent)
   const routes = JSON.parse(document.getElementById("routes").textContent)
   const weights: Weights = new Weights(measurements);
