@@ -12,6 +12,6 @@
 - Install any missing Ruby gems: `bundle`
 - Install any missing yarn packages: `yarn`
 - Prepare the development and test databases
-  - `rails db:migrate`
-  - `rails db:test:prepare`
+  - `bundle exec rake db:migrate`
+  - `bundle exec rake db:test:prepare`
 - Start application processes: `./bin/dev`
