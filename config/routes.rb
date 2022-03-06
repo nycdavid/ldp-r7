@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   resources :anki_decks
   resources :weights
   resources :users
