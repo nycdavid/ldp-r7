@@ -3,7 +3,19 @@
 require "rails_helper"
 
 RSpec.describe "Weights CRUD", type: :system do
-  let!(:user) { FactoryBot.create(:user) }
+  let_it_be(:user) do
+    _user = FactoryBot.create(:user)
+
+    10.times do |n|
+      FactoryBot.create(
+        :weight,
+        user: _user,
+        created_at: n.days.ago,
+        updated_at: n.days.ago,
+      )
+    end
+    _user
+  end
 
   it "creates weights" do
     visit new_weight_path
@@ -16,7 +28,7 @@ RSpec.describe "Weights CRUD", type: :system do
     user.reload
 
     expect(page).to have_text("Weight was successfully created")
-    expect(user.weights.count).to eq(1)
+    expect(user.weights.count).to eq(11)
     created_weight = user.weights.last
     expect(created_weight.notes).to eq("I feel this way")
   end
