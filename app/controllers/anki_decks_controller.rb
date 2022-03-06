@@ -65,6 +65,6 @@ class AnkiDecksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def anki_deck_params
-      params.fetch(:anki_deck, {})
+      params.fetch(:anki_deck, {}).permit(:name)
     end
 end
