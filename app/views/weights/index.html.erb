@@ -15,6 +15,7 @@
       <th class="col">Date</th>
       <th class="col">Measurement</th>
       <th class="col-8">Notes</th>
+      <th class="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +24,9 @@
       <td class="col"><%= weight.created_at.strftime("%m/%d/%Y") %></td>
       <td class="col"><%= weight.measurement.truncate(1) %></td>
       <td class="col-8"><%= weight.notes %></td>
+      <td class="col">
+        <%= link_to("Edit", edit_weight_path(weight)) %>
+      </td>
     </tr>
   <% end %>
   </tbody>
