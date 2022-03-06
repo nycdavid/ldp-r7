@@ -1,0 +1,2 @@
+class AnkiCard < ApplicationRecord
+end
