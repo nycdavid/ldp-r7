@@ -44,3 +44,4 @@
 app/javascript/*.js
 .envrc
 .git
+.DS_Store
