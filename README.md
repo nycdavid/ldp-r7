@@ -15,3 +15,6 @@
   - `bundle exec rake db:migrate`
   - `bundle exec rake db:test:prepare`
 - Start application processes: `./bin/dev`
+
+## Misc
+- Seed some development data: `bundle exec rake db:seed`
