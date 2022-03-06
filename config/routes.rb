@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :anki_decks
   resources :weights
   resources :users
   root "data_points#index"

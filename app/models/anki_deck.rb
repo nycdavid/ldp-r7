@@ -1,0 +1,2 @@
+class AnkiDeck < ApplicationRecord
+end

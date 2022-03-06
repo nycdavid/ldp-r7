@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Anki decks</h1>
+
+<div id="anki_decks">
+  <% @anki_decks.each do |anki_deck| %>
+    <%= render anki_deck %>
+    <p>
+      <%= link_to "Show this anki deck", anki_deck %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New anki deck", new_anki_deck_path %>
