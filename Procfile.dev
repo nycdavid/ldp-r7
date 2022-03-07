@@ -1,2 +1,1 @@
-web: bin/rails server -p 3000
 tsc-watch: yarn run dev
