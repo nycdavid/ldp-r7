@@ -2,7 +2,6 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "@hotwired/turbo-rails": "^7.1.1",
     "@types/chart.js": "^2.9.35",
     "@types/react": "^17.0.39",
     "axios": "^0.26.0",
