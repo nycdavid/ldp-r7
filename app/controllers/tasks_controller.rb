@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all.map do |task|
+    @tasks = Task.where(completed: false).map do |task|
       {
         id: task.id,
         name: task.name,
