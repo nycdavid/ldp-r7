@@ -3,7 +3,22 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.all.map do |task|
+      {
+        id: task.id,
+        name: task.name,
+        description: task.description,
+        start_time: task.start_time,
+        end_time: task.end_time,
+        completed: task.completed,
+        routes: {
+          show: task_path(task),
+          update: task_path(task),
+          delete: task_path(task),
+          edit: edit_task_path(task),
+        },
+      }
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json
