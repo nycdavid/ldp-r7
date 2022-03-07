@@ -29,22 +29,29 @@ import { Line } from "react-chartjs-2";
 import Weights from "./weights";
 import WeightsNew from "./weights/new";
 
+import TasksIndex from "./todo_list/tasks/index";
+
 import WeightsRequest from "./weights_request";
 import DateRangePicker from "./date_range_picker";
 
 document.addEventListener("DOMContentLoaded", () => {
   const rootEl = document.getElementById("app");
   const modelAction: string = rootEl.dataset.modelAction;
-
-  const measurements = JSON.parse(document.getElementById("weight-data").textContent)
+  const componentData = JSON.parse(document.getElementById("component-data").textContent)
   const routes = JSON.parse(document.getElementById("routes").textContent)
-  const weights: Weights = new Weights(measurements);
-  ReactDOM.render(
-    <WeightChart
-      initialWeights={weights}
-      weightsRequest={new WeightsRequest(routes)}
-    />, rootEl
-  );
+
+  if (modelAction == "weights-index") {
+    const weights: Weights = new Weights(componentData);
+
+    ReactDOM.render(
+      <WeightChart
+        initialWeights={weights}
+        weightsRequest={new WeightsRequest(routes)}
+      />, rootEl
+    );
+  } else if (modelAction == "tasks-index") {
+    ReactDOM.render(<TasksIndex tasks={componentData} />, rootEl);
+  }
 });
 
 interface WeightChartProps {
