@@ -1,14 +1,10 @@
 Rails.application.routes.draw do
+  root "pages#tasks_home"
+
   resources :tasks
   resources :anki_decks
   resources :weights
   resources :users
-  root "data_points#index"
 
-  resources :data_points
-
-  get :about_us, to: "pages#about_us"
-  get :retirement_calculator, to: "pages#retirement_calculator"
-
-  get "/sample", to: "pages#sample"
+  get "/tasks_home", to: "pages#tasks_home"
 end
