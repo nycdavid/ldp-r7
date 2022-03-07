@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const componentData = JSON.parse(document.getElementById("component-data").textContent)
   const routes = JSON.parse(document.getElementById("routes").textContent)
 
-  if (modelAction == "weights-index") {
+  if (modelAction === "weights-index") {
     const weights: Weights = new Weights(componentData);
 
     ReactDOM.render(
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         weightsRequest={new WeightsRequest(routes)}
       />, rootEl
     );
-  } else if (modelAction == "tasks-index") {
+  } else if (modelAction === "tasks-index") {
     ReactDOM.render(<TasksIndex tasks={componentData} />, rootEl);
   }
 });
