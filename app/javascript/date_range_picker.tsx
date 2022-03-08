@@ -9,6 +9,9 @@ type Props = {
 }
 
 const DateRangePicker = ({ onClick }: Props) => {
+  const [dateRange, setDateRange]:
+    [string, (dateRange: string) => void] = useState("7D");
+
   const ranges = {
     "7D": 7,
     "2W": 7 * 2,
@@ -17,9 +20,6 @@ const DateRangePicker = ({ onClick }: Props) => {
     "6M": 7 * 4 * 6,
     "1Y": 365,
   }
-
-  const [dateRange, setDateRange]:
-    [string, (dateRange: string) => void] = useState("7D");
 
   return (
     <DateButtons>
