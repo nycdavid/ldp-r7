@@ -41,35 +41,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const routes = JSON.parse(document.getElementById("routes").textContent)
 
   if (modelAction === "weights-index") {
-    const weights: Weights = new Weights(componentData);
-
     ReactDOM.render(
       <WeightChart
-        initialWeights={weights}
+        data={componentData}
         weightsRequest={new WeightsRequest(routes)}
       />, rootEl
     );
   } else if (modelAction === "tasks-index") {
-    ReactDOM.render(<TasksIndex tasks={componentData} />, rootEl);
+    ReactDOM.render(<TasksIndex data={componentData} />, rootEl);
   }
 });
-
-interface WeightChartProps {
-  initialWeights: Weights,
-  weightsRequest: WeightsRequest,
-}
 
 const colors = {
   goodGreen: [24, 128, 56],
   badRed: [217, 48, 37],
 }
 
-const WeightChart = ({ initialWeights, weightsRequest }: WeightChartProps) => {
-  let rgbValues = initialWeights.decreasing() ? colors.goodGreen : colors.badRed;
+const WeightChart = ({ data, weightsRequest }) => {
+  const { weights: dataWeights, user, routes } = data;
+  const initialWeights = new Weights(dataWeights);
   const [weights, setWeights] = useState(initialWeights);
+  const { name: userName } = user;
+  let rgbValues = initialWeights.decreasing() ? colors.goodGreen : colors.badRed;
 
   return (
     <React.Fragment>
+      <h1>{userName}</h1>
+      <a href={routes.new} className="btn btn-primary">Weigh in</a>
       <ProgressInfo>
         <h1>{weights.currentValue()} lbs</h1>
         <NetChange decreasing={weights.decreasing()}>

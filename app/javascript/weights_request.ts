@@ -21,6 +21,6 @@ export default class WeightsRequest {
       },
     );
 
-    return new Weights(response.data);
+    return new Weights(response.data.weights);
   }
 }

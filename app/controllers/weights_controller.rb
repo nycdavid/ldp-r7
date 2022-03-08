@@ -6,20 +6,34 @@ class WeightsController < ApplicationController
     @user = User.find_by(name: params[:user_name].capitalize)
     @weights = @user.weights.where("created_at >= ?", range_param.days.ago).
       order(created_at: :asc)
-    formatted_weights = @weights.map do |weight|
-      {
-        date: weight.created_at.strftime("%m/%d/%Y"),
-        measurement: weight.measurement.truncate(2),
-      }
-    end.to_json
+
+    @data = {
+      weights: @weights.map do |weight|
+        {
+          date: weight.created_at.strftime("%m/%d/%Y"),
+          measurement: weight.measurement.truncate(2),
+          user: {
+            id: weight.user.id,
+            name: weight.user.name,
+          },
+        }
+      end,
+      user: {
+        id: @user.id,
+        name: @user.name,
+      },
+      routes: {
+        new: new_weight_path,
+      },
+    }.to_json
 
     respond_to do |format|
       format.html do
-        @weight_chart_data = formatted_weights
+        @weight_chart_data = @data
       end
 
       format.json do
-        render(json: formatted_weights)
+        render(json: @data)
       end
     end
   end
