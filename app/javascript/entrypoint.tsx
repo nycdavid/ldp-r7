@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       />, rootEl
     );
   } else if (modelAction === "tasks-index") {
-    ReactDOM.render(<TasksIndex data={componentData} />, rootEl);
+    // ReactDOM.render(<TasksIndex data={componentData} />, rootEl);
   }
 });
 
