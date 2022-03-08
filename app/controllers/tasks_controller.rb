@@ -3,22 +3,10 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.where(completed: false).map do |task|
-      {
-        id: task.id,
-        name: task.name,
-        description: task.description,
-        start_time: task.start_time,
-        end_time: task.end_time,
-        completed: task.completed,
-        routes: {
-          show: task_path(task),
-          update: task_path(task),
-          delete: task_path(task),
-          edit: edit_task_path(task),
-        },
-      }
-    end
+    @data = {
+      tasks: Task.incomplete.due_today.map { |task| serialize(task) },
+      header: ["Today", Date.today.strftime("%a %b%e")],
+    }
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -80,5 +68,22 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :completed, :start_time, :end_time)
+  end
+
+  def serialize(task)
+    {
+      id: task.id,
+      name: task.name,
+      description: task.description,
+      start_time: task.start_time,
+      end_time: task.end_time,
+      completed: task.completed,
+      routes: {
+        show: task_path(task),
+        update: task_path(task),
+        delete: task_path(task),
+        edit: edit_task_path(task),
+      },
+    }
   end
 end
