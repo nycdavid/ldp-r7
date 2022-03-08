@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 type Task = {
   id: number,
@@ -15,10 +16,19 @@ type Task = {
   },
 }
 
-const Index = ({ tasks }: { tasks: Array<Task> }) => {
+type DataProps = {
+  tasks: Array<Task>
+}
+
+const Index = ({ data }: { data: DataProps }) => {
+  const { tasks } = data;
+
   return (
     <section>
-      <h1>Tasks</h1>
+      <h1 className="display-3">
+        Today
+        <H1Subtext className="text-muted">Tue Mar 8</H1Subtext>
+      </h1>
       {tasks.map((task: Task, idx: number) => {
         return (
           <div key={idx}>
@@ -36,5 +46,10 @@ const Index = ({ tasks }: { tasks: Array<Task> }) => {
     </section>
   );
 }
+
+const H1Subtext = styled.small`
+  font-size: 0.6em;
+  margin-left: 20px;
+`;
 
 export default Index;

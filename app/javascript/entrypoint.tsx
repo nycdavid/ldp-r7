@@ -1,13 +1,11 @@
 // React
-import React, { useState } from "react";
+import React from "react";
 import * as ReactDOM from "react-dom";
 
-import styled from "styled-components";
-
-// Project files
 // Components
+// Weights
 import WeightsIndex from "./weights/index";
-
+// Tasks
 import TasksIndex from "./todo_list/tasks/index";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -18,6 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (modelAction === "weights-index") {
     ReactDOM.render(<WeightsIndex data={componentData} />, rootEl);
   } else if (modelAction === "tasks-index") {
-    // ReactDOM.render(<TasksIndex data={componentData} />, rootEl);
+    ReactDOM.render(<TasksIndex data={componentData} />, rootEl);
   }
 });
