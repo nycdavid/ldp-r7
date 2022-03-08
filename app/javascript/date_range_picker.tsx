@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 type Props = {
-  onClick: (
+  clickHandler: (
     dayValue: number,
     afterClick: () => void
   ) => void
 }
 
-const DateRangePicker = ({ onClick }: Props) => {
+const DateRangePicker = ({ clickHandler }: Props) => {
   const [dateRange, setDateRange]:
     [string, (dateRange: string) => void] = useState("7D");
 
@@ -33,7 +33,7 @@ const DateRangePicker = ({ onClick }: Props) => {
                 <button
                   className={`nav-link ${dateRange == rangeDisplayVal ? "active" : ""}`}
                   onClick={() => {
-                    onClick(dayValue, () => setDateRange(rangeDisplayVal));
+                    clickHandler(dayValue, () => setDateRange(rangeDisplayVal));
                   }}
                 >
                   {rangeDisplayVal}

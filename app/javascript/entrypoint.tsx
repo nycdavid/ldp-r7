@@ -76,7 +76,7 @@ const WeightChart = ({ data, weightsRequest }) => {
           ({weights.pctChange()})
         </NetChange>
         <DateRangePicker
-          onClick={async (data, afterClick) => {
+          clickHandler={async (data, afterClick) => {
             const w = await weightsRequest.index("david", data)
             setWeights(w);
             afterClick();
