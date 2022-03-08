@@ -77,6 +77,7 @@ const WeightChart = ({ data, weightsRequest }) => {
         </NetChange>
         <DateRangePicker
           onClick={async (data, afterClick) => {
+            console.log("click");
             const w = await weightsRequest.index("david", data)
             setWeights(w);
             afterClick();
