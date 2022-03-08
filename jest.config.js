@@ -2,5 +2,5 @@ module.exports = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-  testPathIgnorePatterns: ["vendor/"],
+  testPathIgnorePatterns: ["vendor/", "factories.ts"],
 }

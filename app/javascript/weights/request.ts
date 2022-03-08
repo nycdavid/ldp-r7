@@ -1,4 +1,5 @@
-import Weights from "./weights";
+import Weights from "./weights_collection";
+import Weight from "../resources/weight";
 import axios from "axios";
 
 export default class WeightsRequest {
@@ -20,7 +21,9 @@ export default class WeightsRequest {
         headers: { "ACCEPT": "application/json" },
       },
     );
+    const _weights = response.data.weights;
+    const weights = _weights.map(_weight => (new Weight(_weight)))
 
-    return new Weights(response.data.weights);
+    return new Weights(weights);
   }
 }

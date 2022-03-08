@@ -5,7 +5,7 @@ import FSPersister from "@pollyjs/persister-fs";
 Polly.register(NodeHTTPAdapter);
 Polly.register(FSPersister);
 
-import WeightsRequest from "../../app/javascript/weights_request";
+import WeightsRequest from "../../app/javascript/weights/request";
 
 describe("WeightsRequest", () => {
   let polly;
@@ -40,7 +40,7 @@ describe("WeightsRequest", () => {
 
       const weights = await req.index("david", 7);
 
-      expect(weights.measurements.length).toEqual(3)
+      expect(weights._weights.length).toEqual(1)
     });
   });
 });

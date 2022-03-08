@@ -33,8 +33,7 @@ const DateRangePicker = ({ clickHandler }: Props) => {
                 <button
                   className={`nav-link ${dateRange == rangeDisplayVal ? "active" : ""}`}
                   onClick={() => {
-                    console.log("date clicked");
-                    // clickHandler(dayValue, () => setDateRange(rangeDisplayVal));
+                    clickHandler(dayValue, () => setDateRange(rangeDisplayVal));
                   }}
                 >
                   {rangeDisplayVal}
