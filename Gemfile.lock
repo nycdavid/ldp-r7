@@ -139,6 +139,7 @@ GEM
       digest
       net-protocol
       timeout
+    niceql (0.5.1)
     nio4r (2.5.8)
     nokogiri (1.13.3)
       mini_portile2 (~> 2.8.0)
@@ -259,6 +260,7 @@ DEPENDENCIES
   faker
   importmap-rails
   jsbundling-rails
+  niceql
   pg
   pry
   pry-rails
