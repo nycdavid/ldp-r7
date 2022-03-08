@@ -4,7 +4,9 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @data = {
-      tasks: Task.incomplete.map { |task| serialize(task) }
+      tasks: Task.incomplete.due_today.map { |task| serialize(task) },
+      overdue_tasks: Task.incomplete.overdue.map { |task| serialize(task) },
+      todays_date: Date.today.strftime("%a %b%e"),
     }
   end
 
