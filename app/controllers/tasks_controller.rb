@@ -72,12 +72,13 @@ class TasksController < ApplicationController
   end
 
   def serialize(task)
+    time_fmt = "%b %e %l:%S%P"
     {
       id: task.id,
       name: task.name,
       description: task.description,
-      start_time: task.start_time,
-      end_time: task.end_time,
+      start_time: task.start_time.in_time_zone(task.user.timezone).strftime(time_fmt),
+      end_time: task.end_time.in_time_zone(task.user.timezone).strftime(time_fmt),
       completed: task.completed_at.present?,
       routes: {
         show: task_path(task),

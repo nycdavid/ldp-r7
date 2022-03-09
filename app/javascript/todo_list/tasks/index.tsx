@@ -64,16 +64,42 @@ const H1Subtext = styled.small`
 const Task = ({ task }: { task: Task }) => {
   return (
     <li className="list-group-item">
-      <p>
-        Name:&nbsp;
-        <a href={task.routes.edit}>{task.name}</a>
-      </p>
-      <p>Description: {task.description}</p>
-      <p>Start time: {task.start_time}</p>
-      <p>End time: {task.end_time}</p>
-      <p>Completed: {task.completed ? "true" : "false"}</p>
+      <Details>
+        <TaskName><a href={task.routes.edit}>{task.name}</a></TaskName>
+        <TimeInfo>
+          <ClockIcon className="bi bi-clock" />
+          {task.start_time} &ndash; {task.end_time}
+        </TimeInfo>
+      </Details>
+
+      <TaskInfo>{task.description}</TaskInfo>
     </li>
   )
 };
+
+const TaskName = styled.p`
+  font-size: 20px;
+  margin-bottom: 0;
+`;
+
+const TaskInfo = styled.p`
+  font-size: 15px;
+  margin-bottom: 0;
+`;
+
+const TimeInfo = styled.p`
+  font-size: 14px;
+  margin-left: 10px;
+  margin-bottom: 2px;
+`;
+
+const ClockIcon = styled.i`
+  margin-right: 5px;
+`;
+
+const Details = styled.div`
+  display: flex;
+  align-items: end;
+`;
 
 export default Index;
