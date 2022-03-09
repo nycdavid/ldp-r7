@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :anki_decks
   resources :weights
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
 
   get "/tasks_home", to: "pages#tasks_home"
 end
