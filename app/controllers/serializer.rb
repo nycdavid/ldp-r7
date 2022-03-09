@@ -7,7 +7,7 @@ module Serializer
       description: task.description,
       start_time: task.start_time.in_time_zone(task.user.timezone).strftime(time_fmt),
       end_time: task.end_time.in_time_zone(task.user.timezone).strftime(time_fmt),
-      completed: task.completed_at,
+      completed_at: task.completed_at,
       routes: {
         show: urls.task_path(task),
         update: urls.task_path(task),

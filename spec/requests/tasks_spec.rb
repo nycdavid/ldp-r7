@@ -10,7 +10,7 @@ RSpec.describe "/tasks", type: :request do
 
   describe "editing tasks" do
     it "updates the task" do
-      params = { task: { complete: true } }
+      params = { data: { task: { complete: true } } }
 
       put(task_path(task), params: params.to_json, headers: headers)
 

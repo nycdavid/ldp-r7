@@ -4,6 +4,8 @@ import styled from "styled-components";
 import TaskResource from "../../resources/task";
 import { Task as _Task } from "../../resource_types";
 
+import TasksCtrl from "./ctrl";
+
 type DataProps = {
   tasks: Array<_Task>,
   overdue_tasks: Array<_Task>,
@@ -25,6 +27,8 @@ const Index = ({ data }: { data: DataProps }) => {
     return new TaskResource(_task);
   });
 
+  const tasksCtrl = new TasksCtrl();
+
   return (
     <div>
         {overdueTasks.length !== 0 && (
@@ -32,7 +36,7 @@ const Index = ({ data }: { data: DataProps }) => {
             <h1 className="display-3">Overdue</h1>
             <ul className="list-group">
               {overdueTasks.map((task: TaskResource, idx: number) => {
-                return (<Task task={task} key={idx} />)
+                return (<Task task={task} key={idx} tasksCtrl={tasksCtrl} />)
               })}
             </ul>
           </section>
@@ -44,7 +48,7 @@ const Index = ({ data }: { data: DataProps }) => {
         </h1>
         <ul className="list-group">
           {tasks.map((task: TaskResource, idx: number) => {
-            return (<Task task={task} key={idx} />)
+            return (<Task task={task} key={idx} tasksCtrl={tasksCtrl} />)
           })}
         </ul>
       </section>
@@ -57,7 +61,12 @@ const H1Subtext = styled.small`
   margin-left: 20px;
 `;
 
-const Task = ({ task: _task }: { task: TaskResource }) => {
+type TaskProps = {
+  task: TaskResource,
+  tasksCtrl: TasksCtrl,
+}
+
+const Task = ({ task: _task, tasksCtrl }: TaskProps) => {
   const [task, setTask] = useState(_task);
 
   return (
@@ -66,8 +75,12 @@ const Task = ({ task: _task }: { task: TaskResource }) => {
         <Check
           className="form-check-input"
           checked={task.completed()}
-          onChange={(event) => {
-            debugger;
+          onChange={async (event) => {
+            const checked = event.target.checked;
+            const updatedTask = await tasksCtrl.
+              update(task, { completed: checked });
+
+            setTask(updatedTask);
           }}
           type="checkbox"
         />

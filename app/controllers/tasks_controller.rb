@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
@@ -40,14 +41,10 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render json: Serializer.task(@task), status: :ok }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      render json: Serializer.task(@task), status: :ok
+    else
+      render json: @task.errors, status: :unprocessable_entity
     end
   end
 
@@ -68,7 +65,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params_hash = params.require(:task).
+    params_hash = params[:data].require(:task).
       permit(:name, :description, :completed, :start_time, :end_time).
       to_h
 
