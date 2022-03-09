@@ -68,24 +68,15 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :completed, :start_time, :end_time)
-  end
+    params_hash = params.require(:task).
+      permit(:name, :description, :completed, :start_time, :end_time).
+      to_h
 
-  def serialize(task)
-    time_fmt = "%b %e %l:%S%P"
-    {
-      id: task.id,
-      name: task.name,
-      description: task.description,
-      start_time: task.start_time.in_time_zone(task.user.timezone).strftime(time_fmt),
-      end_time: task.end_time.in_time_zone(task.user.timezone).strftime(time_fmt),
-      completed: task.completed_at,
-      routes: {
-        show: task_path(task),
-        update: task_path(task),
-        delete: task_path(task),
-        edit: edit_task_path(task),
-      },
-    }
+    if params_hash[:completed]
+      params_hash.delete(:completed)
+      params_hash[:completed_at] = Time.zone.now
+    end
+
+    params_hash
   end
 end
