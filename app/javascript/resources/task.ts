@@ -1,5 +1,11 @@
 import { Task as _Task } from "../resource_types";
 
+type Routes = {
+  edit: string,
+  update: string,
+  show: string,
+}
+
 export default class Task {
   data: _Task
 
@@ -39,7 +45,7 @@ export default class Task {
     }
   }
 
-  routes(): { edit: string } {
-    return this.data.routes || { edit: "" };
+  routes(): Routes {
+    return this.data.routes || { edit: "", update: "", show: "" };
   }
 }
