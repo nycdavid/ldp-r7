@@ -4,8 +4,8 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @data = {
-      tasks: Task.incomplete.due_today.map { |task| serialize(task) },
-      overdue_tasks: Task.incomplete.overdue.map { |task| serialize(task) },
+      tasks: Task.incomplete.due_today.map { |task| Serializer.task(task) },
+      overdue_tasks: Task.incomplete.overdue.map { |task| Serializer.task(task) },
       todays_date: Date.today.strftime("%a %b%e"),
     }
   end
@@ -43,7 +43,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
+        format.json { render json: Serializer.task(@task), status: :ok }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
