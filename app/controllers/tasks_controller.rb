@@ -79,7 +79,7 @@ class TasksController < ApplicationController
       description: task.description,
       start_time: task.start_time.in_time_zone(task.user.timezone).strftime(time_fmt),
       end_time: task.end_time.in_time_zone(task.user.timezone).strftime(time_fmt),
-      completed: task.completed_at.present?,
+      completed: task.completed_at,
       routes: {
         show: task_path(task),
         update: task_path(task),
