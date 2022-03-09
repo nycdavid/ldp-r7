@@ -30,4 +30,16 @@ export default class Task {
   completedAt(): string {
     return this.data.completed_at || "";
   }
+
+  completed(): boolean {
+    if (this.completedAt() === "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  routes(): { edit: string } {
+    return this.data.routes || { edit: "" };
+  }
 }

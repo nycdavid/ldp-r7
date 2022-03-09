@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import Task from "../../resources/task";
+import TaskResource from "../../resources/task";
+import { Task as _Task } from "../../resource_types";
 
 type DataProps = {
-  tasks: Array<Task>,
-  overdue_tasks: Array<Task>,
+  tasks: Array<_Task>,
+  overdue_tasks: Array<_Task>,
   todays_date: string,
 }
 
 const Index = ({ data }: { data: DataProps }) => {
   const {
-    tasks,
+    tasks: _tasks,
     todays_date: todaysDate,
-    overdue_tasks: overdueTasks,
+    overdue_tasks: _overdueTasks,
   } = data;
+
+  const tasks: Array<TaskResource> = _tasks.map(_task => {
+    return new TaskResource(_task);
+  });
+
+  const overdueTasks: Array<TaskResource> = _overdueTasks.map(_task => {
+    return new TaskResource(_task);
+  });
 
   return (
     <div>
@@ -22,7 +31,7 @@ const Index = ({ data }: { data: DataProps }) => {
           <section>
             <h1 className="display-3">Overdue</h1>
             <ul className="list-group">
-              {overdueTasks.map((task: Task, idx: number) => {
+              {overdueTasks.map((task: TaskResource, idx: number) => {
                 return (<Task task={task} key={idx} />)
               })}
             </ul>
@@ -34,7 +43,7 @@ const Index = ({ data }: { data: DataProps }) => {
           <H1Subtext className="text-muted">{todaysDate}</H1Subtext>
         </h1>
         <ul className="list-group">
-          {tasks.map((task: Task, idx: number) => {
+          {tasks.map((task: TaskResource, idx: number) => {
             return (<Task task={task} key={idx} />)
           })}
         </ul>
@@ -48,21 +57,45 @@ const H1Subtext = styled.small`
   margin-left: 20px;
 `;
 
-const Task = ({ task }: { task: Task }) => {
+const Task = ({ task: _task }: { task: TaskResource }) => {
+  const [task, setTask] = useState(_task);
+
   return (
-    <li className="list-group-item">
+    <TaskItem className="list-group-item" task={task}>
       <Details>
-        <TaskName><a href={task.routes.edit}>{task.name}</a></TaskName>
+        <Check
+          className="form-check-input"
+          checked={task.completed()}
+          onChange={(event) => {
+            debugger;
+          }}
+          type="checkbox"
+        />
+        <TaskName><a href={task.routes().edit}>{task.name()}</a></TaskName>
         <TimeInfo>
           <ClockIcon className="bi bi-clock" />
-          {task.start_time} &ndash; {task.end_time}
+          {task.startTime()} &ndash; {task.endTime()}
         </TimeInfo>
       </Details>
 
-      <TaskInfo>{task.description}</TaskInfo>
-    </li>
+      <TaskInfo>{task.description()}</TaskInfo>
+    </TaskItem>
   )
 };
+
+const TaskItem = styled.li<{ task: TaskResource }>`
+  & > *:not(input) {
+    text-decoration: ${props => !!props.task.completed() ? "line-through" : "unset"};
+    opacity: ${props => !!props.task.completed() ? 0.7 : "unset"};
+  }
+`;
+
+const Check = styled.input`
+  align-self: center;
+  margin-bottom: 4px;
+  margin-right: 8px;
+  cursor: pointer;
+`;
 
 const TaskName = styled.p`
   font-size: 20px;
