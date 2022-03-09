@@ -49,11 +49,11 @@ const Index = ({ data }: { data: DataProps }) => {
     <section>
       <a className="btn btn-primary" href={routes.new}>Weigh in</a>
       <ProgressInfo>
-        <h1>{weightsColl.currentValue()} lbs</h1>
+        <h1>{weights.currentValue()} lbs</h1>
         <NetChange color={color}>
-          {weightsColl.decreasing() ? "" : "+"}
-          {weightsColl.netChange()} lbs
-          ({weightsColl.pctChange()})
+          {weights.decreasing() ? "" : "+"}
+          {weights.netChange()} lbs
+          ({weights.pctChange()})
         </NetChange>
         <DateRangePicker
           clickHandler={async (data, afterClick) => {
