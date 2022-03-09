@@ -1,20 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-type Task = {
-  id: number,
-  name: string,
-  description: string,
-  start_time: string,
-  end_time: string,
-  completed: boolean,
-  routes: {
-    show: string,
-    update: string,
-    delete: string,
-    edit: string,
-  },
-}
+import Task from "../../resources/task";
 
 type DataProps = {
   tasks: Array<Task>,
