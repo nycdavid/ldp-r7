@@ -69,9 +69,9 @@ class TasksController < ApplicationController
       permit(:name, :description, :completed, :start_time, :end_time).
       to_h
 
-    if params_hash[:completed]
-      params_hash.delete(:completed)
-      params_hash[:completed_at] = Time.zone.now
+    if params_hash.has_key?(:completed)
+      value = params_hash.delete(:completed)
+      params_hash[:completed_at] = value ? Time.zone.now : nil
     end
 
     params_hash
