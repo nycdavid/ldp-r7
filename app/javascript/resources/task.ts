@@ -47,6 +47,14 @@ export default class Task {
     }
   }
 
+  overdue(): boolean {
+    const clientTime = DateTime.now();
+    const endDate = DateTime.fromISO(this.data.end_time).
+    setZone(clientTime.zoneName);
+
+    return endDate < clientTime;
+  }
+
   routes(): Routes {
     return this.data.routes || { edit: "", update: "", show: "" };
   }
