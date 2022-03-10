@@ -70,8 +70,11 @@ const Task = ({ task: _task, tasksCtrl }: TaskProps) => {
   const [task, setTask] = useState(_task);
 
   return (
-    <TaskItem className="list-group-item" task={task}>
-      <Details>
+    <TaskItem
+      id={`task-${task.id()}`}
+      className="list-group-item" task={task}
+    >
+      <Details className={task.completed() ? "completed" : ""}>
         <Check
           className="form-check-input"
           checked={task.completed()}

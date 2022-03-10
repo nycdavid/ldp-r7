@@ -4,8 +4,6 @@ FactoryBot.define do
     description { "Figure out how we're going to #{Faker::Company.bs}" }
     start_time { 0.hours.from_now }
     end_time { 2.hours.from_now }
-    completed_at { Time.zone.now }
-
     user
   end
 end
