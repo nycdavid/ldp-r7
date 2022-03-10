@@ -14,8 +14,8 @@
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=vendor/javascript",
-    "tsc": "tsc --project tsconfig.json --noEmit",
-    "dev": "tsc-watch --noEmit --noClear --project tsconfig.json --onSuccess \"yarn build\""
+    "tsc": "tsc --project tsconfig.json",
+    "dev": "tsc-watch --noClear --project tsconfig.json --onSuccess \"yarn build\""
   },
   "devDependencies": {
     "@pollyjs/adapter-node-http": "^6.0.4",

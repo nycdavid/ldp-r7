@@ -3,6 +3,8 @@
     "jsx": "react",
     "lib": ["ES6", "DOM"],
     "esModuleInterop": true,
+    "noEmit": true,
+    "incremental": true
   },
   "include": [
     "app/javascript/**/*.tsx",
