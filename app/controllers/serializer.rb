@@ -5,8 +5,8 @@ module Serializer
       id: task.id,
       name: task.name,
       description: task.description,
-      start_time: task.start_time.in_time_zone(task.user.timezone).strftime(time_fmt),
-      end_time: task.end_time.in_time_zone(task.user.timezone).strftime(time_fmt),
+      start_time: task.start_time.in_time_zone(task.user.timezone),
+      end_time: task.end_time.in_time_zone(task.user.timezone),
       completed_at: task.completed_at,
       routes: {
         show: urls.task_path(task),

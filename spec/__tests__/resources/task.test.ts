@@ -7,7 +7,7 @@ import Factory from "../factories";
 
 describe("Task", () => {
   test("has all passed attributes", () => {
-    const data: _Task = Factory.attributesFor("task")
+    const data: _Task = Factory.attributesFor("task");
     const task: Task = new Task(data)
 
     expect(task.id()).toEqual(data.id);
@@ -17,5 +17,22 @@ describe("Task", () => {
     expect(task.endTime()).toEqual(data.end_time);
     expect(task.completedAt()).toEqual("");
     expect(task.completed()).toEqual(false);
+  });
+
+  describe("#overdue", () => {
+    test("returns true if the task's end time has passed", () => {
+      const pastTime = DateTime.now().setZone("UTC").minus({ hours: 3 });
+      const data: _Task = Factory.attributesFor(
+        "task",
+        {
+          start_time: pastTime.toISO(),
+          end_time: pastTime.plus({ hours: 1 }).toISO(),
+        },
+      );
+
+      const task = new Task(data);
+
+      expect(task.overdue()).toEqual(true);
+    });
   });
 });

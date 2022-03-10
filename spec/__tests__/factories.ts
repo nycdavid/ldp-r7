@@ -46,13 +46,14 @@ const resourceMap = {
     klass: Task,
     generator: (): _Task => {
       const id = Math.floor(Math.random() * 1000);
+      const currentTime = DateTime.now().setZone("UTC");
 
       return {
         id: id,
         name: `Task #${Math.floor(Math.random() * 1000)}`,
         description: "Lorem ipsum dolor sit amet",
-        start_time: "2022/01/01 10:32AM",
-        end_time: "2022/01/01 11:00AM",
+        start_time: currentTime.toISO(),
+        end_time: currentTime.plus({ hours: 3 }).toISO(),
         completed_at: null,
         routes: {
           show: `/tasks/${id}`,
