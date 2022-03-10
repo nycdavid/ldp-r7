@@ -8,6 +8,8 @@ type Routes = {
   show: string,
 }
 
+const DTFormat = "MMM d h:mma";
+
 export default class Task {
   data: _Task
 
@@ -28,11 +30,11 @@ export default class Task {
   }
 
   startTime(): string {
-    return this.data.start_time || "";
+    return DateTime.fromISO(this.data.start_time).toFormat(DTFormat);
   }
 
   endTime(): string {
-    return this.data.end_time || "";
+    return DateTime.fromISO(this.data.end_time).toFormat(DTFormat);
   }
 
   completedAt(): string {
@@ -58,4 +60,8 @@ export default class Task {
   routes(): Routes {
     return this.data.routes || { edit: "", update: "", show: "" };
   }
+}
+
+export {
+  DTFormat,
 }

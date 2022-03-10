@@ -85,7 +85,7 @@ const Task = ({ task: _task, tasksCtrl }: TaskProps) => {
           type="checkbox"
         />
         <TaskName><a href={task.routes().edit}>{task.name()}</a></TaskName>
-        <TimeInfo>
+        <TimeInfo task={task}>
           <ClockIcon className="bi bi-clock" />
           {task.startTime()} &ndash; {task.endTime()}
         </TimeInfo>
@@ -120,10 +120,11 @@ const TaskInfo = styled.p`
   margin-bottom: 0;
 `;
 
-const TimeInfo = styled.p`
-  font-size: 14px;
+const TimeInfo = styled.p<{ task: TaskResource }>`
+  font-size: 13.5px;
   margin-left: 10px;
   margin-bottom: 2px;
+  color: ${props => props.task.overdue() ? "#d1453b" : "unset"};
 `;
 
 const ClockIcon = styled.i`
