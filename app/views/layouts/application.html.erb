@@ -33,6 +33,9 @@
     </nav>
     <div class="container">
       <section id="app" data-model-action=<%= "#{controller_name}-#{action_name}" %>></section>
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
       <%= yield %>
     </div>
   </body>
