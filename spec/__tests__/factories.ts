@@ -39,14 +39,12 @@ const factoryBotCmd = (resource: string): string => {
 const resourceMap = {
   weight: {
     klass: Weight,
-    generator: (): _Weight => {
+    generator: async () => {
+      const { stdout } = await asyncExec(factoryBotCmd("weight"))
+
       return {
-        date: "2022/01/01",
-        measurement: Math.random() * 200,
-        user: {
-          id: Math.floor(Math.random() * 1000),
-          name: "David",
-        },
+        ...JSON.parse(stdout),
+        id: Math.floor(Math.random() * 1000),
       }
     },
   },
@@ -56,8 +54,8 @@ const resourceMap = {
       const { stdout } = await asyncExec(factoryBotCmd("task"));
 
       return {
-        id: Math.floor(Math.random() * 1000),
         ...JSON.parse(stdout),
+        id: Math.floor(Math.random() * 1000),
       }
 
     },
