@@ -35,7 +35,10 @@
     <%= form.label :end_time, style: "display: block" %>
     <%= form.datetime_field :end_time %>
   </div>
-
+  <div>
+    <%= form.label :user, class: "form-label" %>
+    <%= form.select :user_id, User.all.map { |u| [u.name, u.id] }, class: "form-control" %>
+  </div>
   <div>
     <%= form.submit %>
   </div>

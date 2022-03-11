@@ -26,11 +26,14 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    create_params = params.require(:task).
+      permit(:name, :description, :start_time, :end_time, :user_id)
+    @task = Task.new(create_params)
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
+        flash[:success] = "Task was successfully created."
+        format.html { redirect_to task_url(@task) }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new, status: :unprocessable_entity }
