@@ -6,26 +6,34 @@ import Task from "../../app/javascript/resources/task";
 import { Weight as _Weight } from "../../app/javascript/resource_types";
 import { Task as _Task } from "../../app/javascript/resource_types";
 
+import util from "util";
+import { exec } from "child_process";
+const asyncExec = util.promisify(exec);
+
 class Factory {
-  static create(resource: string, attrs = {}) {
+  static async create(resource: string, attrs = {}) {
     const { klass, generator } = resourceMap[resource];
 
     const data = {
-      ...generator(),
+      ...(await generator()),
       ...attrs,
     }
 
     return new klass(data);
   }
 
-  static attributesFor(resource: string, attrs = {}) {
+  static async attributesFor(resource: string, attrs = {}) {
     const { generator } = resourceMap[resource]
 
     return {
-      ...generator(),
+      ...(await generator()),
       ...attrs,
     }
   }
+}
+
+const factoryBotCmd = (resource: string): string => {
+  return `./bin/rails runner "puts FactoryBot.attributes_for(:${resource}).to_json"`;
 }
 
 const resourceMap = {
@@ -44,24 +52,14 @@ const resourceMap = {
   },
   task: {
     klass: Task,
-    generator: (): _Task => {
-      const id = Math.floor(Math.random() * 1000);
-      const currentTime = DateTime.now().setZone("UTC");
+    generator: async () => {
+      const { stdout } = await asyncExec(factoryBotCmd("task"));
 
       return {
-        id: id,
-        name: `Task #${Math.floor(Math.random() * 1000)}`,
-        description: "Lorem ipsum dolor sit amet",
-        start_time: currentTime.toISO(),
-        end_time: currentTime.plus({ hours: 3 }).toISO(),
-        completed_at: null,
-        routes: {
-          show: `/tasks/${id}`,
-          update: `/tasks/${id}`,
-          delete: `/tasks/${id}`,
-          edit: `/tasks/${id}/edit`,
-        },
+        id: Math.floor(Math.random() * 1000),
+        ...JSON.parse(stdout),
       }
+
     },
   },
 }

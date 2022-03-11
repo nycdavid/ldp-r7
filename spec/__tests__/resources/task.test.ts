@@ -10,8 +10,8 @@ describe("Task", () => {
     return DateTime.fromISO(isoStr).toFormat(DTFormat);
   }
 
-  test("has all passed attributes", () => {
-    const data: _Task = Factory.attributesFor("task");
+  test("has all passed attributes", async () => {
+    const data: _Task = await Factory.attributesFor("task", { completed_at: null });
     const task: Task = new Task(data)
 
     expect(task.id()).toEqual(data.id);
@@ -24,9 +24,9 @@ describe("Task", () => {
   });
 
   describe("#overdue", () => {
-    test("returns true if the task's end time has passed", () => {
+    test("returns true if the task's end time has passed", async () => {
       const pastTime = DateTime.now().setZone("UTC").minus({ hours: 3 });
-      const data: _Task = Factory.attributesFor(
+      const data: _Task = await Factory.attributesFor(
         "task",
         {
           start_time: pastTime.toISO(),
