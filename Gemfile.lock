@@ -189,6 +189,9 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.0.0)
     rake (13.0.6)
+    redis (4.6.0)
+    redlock (1.2.2)
+      redis (>= 3.0.0, < 5.0)
     regexp_parser (2.2.0)
     reline (0.3.0)
       io-console (~> 0.5)
@@ -286,6 +289,8 @@ DEPENDENCIES
   pry-rails
   puma (~> 5.6.2)
   rails (~> 7.0.2.3)
+  redis
+  redlock
   rspec-rails (~> 5.0.0)
   rubocop
   sassc-rails
