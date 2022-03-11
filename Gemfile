@@ -11,6 +11,8 @@ gem "jsbundling-rails"
 gem "pg"
 gem "puma", "~> 5.6.2"
 gem "rails", "~> 7.0.2.3"
+gem "redis"
+gem "redlock"
 gem "sassc-rails"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
