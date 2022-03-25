@@ -8,7 +8,7 @@ class WeightsController < ApplicationController
       order(created_at: :asc)
 
     @data = {
-      weights: @weights.map { |weight| serialize(weight) },
+      weights: @weights.map { |weight| Serializer.weight(weight) },
       user: {
         id: @user.id,
         name: @user.name,
@@ -46,10 +46,11 @@ class WeightsController < ApplicationController
   # POST /weights or /weights.json
   def create
     @weight = Weight.new(weight_params)
+    user = User.find(weight_params[:user_id])
 
     respond_to do |format|
       if @weight.save
-        format.html { redirect_to weight_url(@weight), notice: "Weight was successfully created." }
+        format.html { redirect_to weights_url(user_name: user.name), notice: "Weight was successfully created." }
         format.json { render :show, status: :created, location: @weight }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -94,16 +95,5 @@ class WeightsController < ApplicationController
 
   def range_param
     params.permit(:range).with_defaults(range: 7).require(:range).to_i
-  end
-
-  def serialize(weight)
-    {
-      date: weight.created_at.strftime("%m/%d/%Y"),
-      measurement: weight.measurement.truncate(2),
-      user: {
-        id: weight.user.id,
-        name: weight.user.name,
-      },
-    }
   end
 end

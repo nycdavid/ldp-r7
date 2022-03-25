@@ -1,6 +1,5 @@
 module Serializer
   def self.task(task)
-    time_fmt = "%b %e %l:%S%P"
     {
       id: task.id,
       name: task.name,
@@ -13,6 +12,17 @@ module Serializer
         update: urls.task_path(task),
         delete: urls.task_path(task),
         edit: urls.edit_task_path(task),
+      },
+    }
+  end
+
+  def self.weight(weight)
+    {
+      date: weight.created_at.strftime("%m/%d/%Y"),
+      measurement: weight.measurement.truncate(2),
+      user: {
+        id: weight.user.id,
+        name: weight.user.name,
       },
     }
   end

@@ -28,6 +28,7 @@ RSpec.describe "Weights CRUD", type: :system do
     user.reload
 
     expect(page).to have_text("Weight was successfully created")
+    expect(page).to have_css('h1[data-provides="current-weight"]')
     expect(user.weights.count).to eq(11)
     created_weight = user.weights.last
     expect(created_weight.notes).to eq("I feel this way")

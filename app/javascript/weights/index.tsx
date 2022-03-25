@@ -49,7 +49,7 @@ const Index = ({ data }: { data: DataProps }) => {
     <section>
       <a className="btn btn-primary" href={routes.new}>Weigh in</a>
       <ProgressInfo>
-        <h1>{weights.currentValue()} lbs</h1>
+        <h1 data-provides="current-weight">{weights.currentValue()} lbs</h1>
         <NetChange color={color}>
           {weights.decreasing() ? "" : "+"}
           {weights.netChange()} lbs
