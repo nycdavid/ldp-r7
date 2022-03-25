@@ -8,21 +8,21 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  host: localhost
+  host: <%= ENV.fetch("DATABASE_HOST") %>
   port: 5432
   username: postgres
   password: postgres
 
 development:
   <<: *default
-  database: ldp_development
+  database: ldp_development_david
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: ldp_test
+  database: ldp_test_david
 
 production:
   <<: *default
