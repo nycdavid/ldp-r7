@@ -57,8 +57,8 @@ RSpec.describe "/weights", type: :request do
       weights_within_range = david.weights.where("created_at >= ?", 7.days.ago)
 
       expect(response).to have_http_status(:ok)
-      expect(resp.count).to eq(weights_within_range.count)
-      expect(resp[0].keys).to match_array(%w[date measurement])
+      expect(resp["weights"].count).to eq(weights_within_range.count)
+      expect(resp["weights"][0].keys).to match_array(%w[date measurement user])
     end
 
     it "supports a range parameter" do
@@ -67,16 +67,15 @@ RSpec.describe "/weights", type: :request do
       resp = JSON.parse(response.body)
       weights_within_range = david.weights.where("created_at >= ?", 14.days.ago)
 
-      expect(resp.count).to eq(weights_within_range.count)
+      expect(resp["weights"].count).to eq(weights_within_range.count)
     end
 
     it "returns the weights in order" do
       get(weights_path, params: { user_name: "David", range: 14 }, headers: headers)
 
       resp = JSON.parse(response.body)
-      weights_within_range = david.weights.where("created_at >= ?", 14.days.ago)
 
-      returned_dates = resp.map do |weight|
+      returned_dates = resp["weights"].map do |weight|
         Date.strptime(weight["date"], "%m/%d/%Y")
       end
 
