@@ -2,3 +2,5 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
